@@ -1,37 +1,33 @@
-
-function Car(make, model, year) {
-    this.make = make;     
-    this.model = model;   
-    this.year = year;   
-  }
-                  
- 
-  Car.prototype.getDetails = function() {
-    return `${this.year} ${this.make} ${this.model}`;
-  };
-  
-
-  function ElectricCar(make, model, year, batteryCapacity) {
-   
-    Car.call(this, make, model, year);
-    
-    this.batteryCapacity = batteryCapacity;  
+function fetchUser() {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve({ userId: 1, username: 'john_doe' }), 1000); // Simulated user data
+    });
   }
   
- 
-  ElectricCar.prototype = Object.create(Car.prototype);
-  ElectricCar.prototype.constructor = ElectricCar;
+  function fetchPosts(userId) {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve([{ postId: 101, title: 'First Post' }, { postId: 102, title: 'Second Post' }]), 1000); // Simulated posts data
+    });
+  }
   
+  function fetchComments(postId) {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve([{ commentId: 1, content: 'Great post!' }, { commentId: 2, content: 'Interesting!' }]), 1000); // Simulated comments data
+    });
+  }
   
-  ElectricCar.prototype.getBatteryInfo = function() {
-    return `Battery Capacity: ${this.batteryCapacity} kWh`;
-  };
-  
- 
-  let car1 = new Car("Toyota", "Corolla", 2020);
-  console.log(car1.getDetails());  
-  
-  let electricCar1 = new ElectricCar("Tesla", "Model S", 2022, 100);
-  console.log(electricCar1.getDetails());  
-  console.log(electricCar1.getBatteryInfo());  
+  // Chaining the promises
+  fetchUser()
+    .then(user => {
+      console.log('User:', user.username);
+      return fetchPosts(user.userId);
+    })
+    .then(posts => {
+      console.log('Posts:', posts);
+      return fetchComments(posts[0].postId); // Fetching comments for the first post
+    })
+    .then(comments => {
+      console.log('Comments:', comments);
+    })
+    .catch(error => console.log(error));
   

@@ -1,36 +1,15 @@
+const promise1 = new Promise(resolve => resolve(5));
+const promise2 = new Promise(resolve => resolve(10));
+const promise3 = new Promise(resolve => resolve(15));
 
-function Person(name, age) {
-    this.name = name;  
-    this.age = age;   
-  }
-  
- 
-  Person.prototype.describe = function() {
-    return `Name: ${this.name}, Age: ${this.age}`;
-  };
-  
-
-  function Student(name, age, grade) {
-   
-    Person.call(this, name, age);
-  
-    this.grade = grade;  
-  }
-  
- 
-  Student.prototype = Object.create(Person.prototype);
-  Student.prototype.constructor = Student;
-  
-  
-  Student.prototype.study = function() {
-    return `${this.name} is studying for grade ${this.grade}.`;
-  };
-  
- 
-  let person1 = new Person("John", 30);
-  console.log(person1.describe()); 
-  
-  let student1 = new Student("John", 30, "A");
-  console.log(student1.describe());  
-  console.log(student1.study());  
-  
+promise1
+  .then(value1 => {
+    return promise2.then(value2 => value1 + value2);
+  })
+  .then(sum1 => {
+    return promise3.then(value3 => sum1 + value3);
+  })
+  .then(finalSum => {
+    console.log(finalSum);  
+  })
+  .catch(error => console.log(error));

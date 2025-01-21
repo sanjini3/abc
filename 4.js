@@ -1,30 +1,28 @@
-
-function Student(name, grade) {
-    this.name = name; 
-    this.grade = grade;  
-  
-  
-    this.study = function() {
-      console.log(`${this.name} is studying `);
-    };
-  
-
-    this.getGrade = function() {
-      return this.grade;
-    };
+function fetchDataWithCallback(success, callback) {
+    setTimeout(() => {
+      if (success) {
+        callback(null, "Data fetched successfully!");
+      } else {
+        callback("Error fetching data", null);
+      }
+    }, 2000); 
   }
   
 
-  let student1 = new Student("Alice", "A");
-  let student2 = new Student("Bob", "B");
-  let student3 = new Student("Charlie", "C");
+  fetchDataWithCallback(true, (error, data) => {
+    if (error) {
+      console.log("Error:", error);
+    } else {
+      console.log("Success:", data); 
+    }
+  });
   
 
-  student1.study();  
-  student2.study();  
-  student3.study();  
+  fetchDataWithCallback(false, (error, data) => {
+    if (error) {
+      console.log("Error:", error);  
+    } else {
+      console.log("Success:", data);
+    }
+  });
   
-
-  console.log(student1.getGrade());  
-  console.log(student2.getGrade());  
-  console.log(student3.getGrade());  

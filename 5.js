@@ -1,14 +1,21 @@
-const temperatureConverter = {
-   
-    toCelsius: function(fahrenheit) {
-      return (fahrenheit - 32) * (5 / 9);
-    },
-    
+function fetchData(url) {
+    return new Promise((resolve, reject) => {
+      if (url.includes("error")) {
+        reject("Error: URL contains the word 'error'");
+      } else {
+        resolve("Data fetched successfully.");
+      }
+    });
+  }
   
-    toFahrenheit: function(celsius) {
-      return (celsius * (9 / 5)) + 32;
-    }
-  };
 
-  console.log(temperatureConverter.toCelsius(104.5))
-  console.log(temperatureConverter.toFahrenheit(25))
+  
+ 
+  fetchData("https://example.com")
+    .then(response => console.log(response))  
+    .catch(error => console.log(error));
+ 
+  fetchData("https://example.com/error")
+    .then(response => console.log(response))
+    .catch(error => console.log(error));       
+  
