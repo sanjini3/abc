@@ -1,19 +1,15 @@
-function multiply(num,callback){
-    callback(num*2);
+const os = require('os');
+
+
+function logUptime() {
+  const uptimeSeconds = os.uptime();
+
+  const days = Math.floor(uptimeSeconds / (60 * 60 * 24));
+  const hours = Math.floor((uptimeSeconds % (60 * 60 * 24)) / (60 * 60));
+  const minutes = Math.floor((uptimeSeconds % (60 * 60)) / 60);
+
+  console.log(`System Uptime: ${days} days, ${hours} hours, ${minutes} minutes`);
 }
-function subtract(num,callback){
-    callback(num-3);
-}
-function add(num,callback){
-    callback(num+10);
-}
-function operation(num){
-    multiply(num,result1=>{
-        subtract(result1,result2=>{
-            add(result2,result3=>{
-                console.log(result3);
-            });
-        });
-    });
-}
-operation(3);
+
+
+setInterval(logUptime, 5000);

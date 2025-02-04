@@ -1,12 +1,11 @@
-function delayedMessage(message, delay, callback) {
-    setTimeout(() => {
-      console.log(message);
-      callback(); 
-    }, delay);
-  }
-  
+const EventEmitter = require('events');
 
-  delayedMessage("Hello, world!", 2000, () => {
-    console.log("Message printed after delay!");
-  });
-  
+
+const emitter = new EventEmitter();
+
+
+emitter.on('userDetails', (name, age) => {
+  console.log(`Hello, ${name}! You are ${age} years old.`);
+});
+
+emitter.emit('userDetails', 'San', 20); 
