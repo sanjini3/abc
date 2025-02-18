@@ -1,19 +1,29 @@
-const os = require('os');
+const http = require("http");
 
+const server = http.createServer((req, res) => {
+    try {
+        if (req.method === "GET") {
+            if (req.url === "/") {
+                res.writeHead(200, { "Content-Type": "text/plain" });
+                res.end("Welcome to the home page!");
+            } else if (req.url === "/about") {
+                res.writeHead(200, { "Content-Type": "text/plain" });
+                res.end("About us page");
+            } else {
+                res.writeHead(404, { "Content-Type": "text/plain" });
+                res.end("404 Not Found");
+            }
+        } else {
+            res.writeHead(405, { "Content-Type": "text/plain" });
+            res.end("Method Not Allowed");
+        }
+    } catch (error) {
+        res.writeHead(500, { "Content-Type": "text/plain" });
+        res.end("500 Internal Server Error");
+    }
+});
 
-function displayMemoryUsage() {
-  const totalMemory = os.totalmem(); 
-  const freeMemory = os.freemem(); 
-
-  const usedMemory = totalMemory - freeMemory; 
-  const freeMemoryPercentage = (freeMemory / totalMemory) * 100;
-
-  console.log(`Total Memory: ${(totalMemory / (1024 * 1024 * 1024)).toFixed(2)} GB`);
-  console.log(`Free Memory: ${(freeMemory / (1024 * 1024 * 1024)).toFixed(2)} GB`);
-  console.log(`Used Memory: ${(usedMemory / (1024 * 1024 * 1024)).toFixed(2)} GB`);
-  console.log(`Free Memory Percentage: ${freeMemoryPercentage.toFixed(2)}%`);
-  console.log('---------------------------------------------');
-}
-
-
-setInterval(displayMemoryUsage, 5000);
+const PORT = 3000;
+server.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
